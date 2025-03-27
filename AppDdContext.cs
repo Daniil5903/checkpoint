@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using checkpoint.Models; // Убедитесь, что пространство имен соответствует вашему проекту
-
-namespace checkpoint // Убедитесь, что пространство имен соответствует вашему проекту
+using checkpoint.Models; 
+namespace checkpoint 
 {
     public class AppDbContext : DbContext
     {
