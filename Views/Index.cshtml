@@ -1,0 +1,36 @@
+﻿@page
+@model checkpoint.Views.IndexModel
+@{
+    ViewData["Title"] = "Форма регистрации";
+}
+
+<h2>Форма регистрации</h2>
+
+<form asp-action="SubmitStudent" method="post">
+    <h3>Студент</h3>
+    <input type="text" name="FirstName" placeholder="Имя" required />
+    <input type="text" name="LastName" placeholder="Фамилия" required />
+    <input type="text" name="MiddleName" placeholder="Отчество" />
+    <input type="date" name="BirthDate" required />
+    <input type="text" name="GroupNumber" placeholder="Номер группы" required />
+    <input type="text" name="Specialty" placeholder="Специальность" required />
+    <button type="submit">Сохранить</button>
+</form>
+
+<form asp-action="SubmitEmployee" method="post">
+    <h3>Работник</h3>
+    <input type="text" name="FirstName" placeholder="Имя" required />
+    <input type="text" name="LastName" placeholder="Фамилия" required />
+    <input type="text" name="MiddleName" placeholder="Отчество" />
+    <input type="text" name="Position" placeholder="Должность" required />
+    <button type="submit">Сохранить</button>
+</form>
+
+<form asp-action="SubmitVisitor" method="post">
+    <h3>Посетитель</h3>
+    <input type="text" name="FirstName" placeholder="Имя" required />
+    <input type="text" name="LastName" placeholder="Фамилия" required />
+    <input type="text" name="MiddleName" placeholder="Отчество" />
+    <button type="submit">Сохранить</button>
+</form>
+
