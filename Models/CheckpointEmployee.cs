@@ -2,7 +2,7 @@
 
 namespace checkpoint.Models
 {
-    public class CheckpointEmployer
+    public class CheckpointEmployee
     {
         [Key]
         public int Id { get; set; }
