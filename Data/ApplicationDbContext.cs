@@ -15,10 +15,10 @@ namespace checkpoint.Data
             //Database.Migrate(); // Автоматически применяет миграции и создаёт базу, если её нет
         }
 
-        public DbSet<Employer> Employers { get; set; } //таблица Employer, содержащая данные о сотрудниках.
+        public DbSet<Employee> Employers { get; set; } //таблица Employee, содержащая данные о сотрудниках.
         public DbSet<Student> Students { get; set; } //таблица Students, содержащая данные о студентах.
         public DbSet<Pass> Passes{ get; set; } //таблица Pass, хранящая информацию о пропусках.
-        public DbSet<CheckpointEmployer> CheckpointEmployers { get; set; } //таблица CheckpointEmployer, хранящая информацию о сотрудниках КПП.
+        public DbSet<CheckpointEmployee> CheckpointEmployers { get; set; } //таблица CheckpointEmployer, хранящая информацию о сотрудниках КПП.
         public DbSet<Visitor> Visitors { get; set; } //таблица Visitor, хранящая информацию о посетителях.
     }
 }
