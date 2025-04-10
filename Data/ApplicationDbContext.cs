@@ -12,10 +12,10 @@ namespace checkpoint.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            //Database.Migrate(); // Автоматически применяет миграции и создаёт базу, если её нет
+            Database.Migrate(); // Автоматически применяет миграции и создаёт базу, если её нет
         }
 
-        public DbSet<Employee> Employers { get; set; } //таблица Employee, содержащая данные о сотрудниках.
+        public DbSet<Employee> Employees { get; set; } //таблица Employee, содержащая данные о сотрудниках.
         public DbSet<Student> Students { get; set; } //таблица Students, содержащая данные о студентах.
         public DbSet<Pass> Passes{ get; set; } //таблица Pass, хранящая информацию о пропусках.
         public DbSet<CheckpointEmployee> CheckpointEmployers { get; set; } //таблица CheckpointEmployer, хранящая информацию о сотрудниках КПП.

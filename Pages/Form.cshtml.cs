@@ -1,15 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using checkpoint.Models; // Замени на свой namespace с моделями
-using checkpoint.Data;   // Замени на свой namespace с DbContext
+using checkpoint.Models; 
+using checkpoint.Data;   
 
 namespace checkpoint.Pages
 {
     public class FormModel : PageModel
     {
-        private readonly AppDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public FormModel(AppDbContext context)
+        public FormModel(ApplicationDbContext context)
         {
             _context = context;
         }
