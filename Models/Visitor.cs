@@ -16,8 +16,5 @@ namespace checkpoint.Models
 
         [StringLength(50)]
         public string? Patronymic { get; set; }
-
-        // Navigation property to Pass (one-to-many relationship)
-        public ICollection<Pass>? Passes { get; set; }
     }
 }
