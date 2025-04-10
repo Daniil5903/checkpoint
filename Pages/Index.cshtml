@@ -32,6 +32,26 @@
         </ul>
     </div>
 </nav>
+<h2 class="mt-4">Недавние посетители</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Отчество</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var visitor in Model.Visitors)
+        {
+            <tr>
+                <td>@visitor.Name</td>
+                <td>@visitor.Surname</td>
+                <td>@visitor.Patronymic</td>
+            </tr>
+        }
+    </tbody>
+</table>
 <style>
     .kpp-description 
     {

@@ -1,19 +1,20 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using checkpoint.Models;
 using Microsoft.EntityFrameworkCore;
+using checkpoint.Models;
+using checkpoint.Data;
 
-namespace checkpoint.Pages
+namespace checkpoint.Pages.Visitors
 {
     public class IndexModel : PageModel
     {
-        private readonly AppDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public IndexModel(AppDbContext context)
+        public IndexModel(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public IList<Visitor> Visitors { get; set; } = new List<Visitor>();
+        public IList<Visitor> Visitors { get; set; }
 
         public async Task OnGetAsync()
         {
