@@ -19,7 +19,7 @@ namespace checkpoint.Models
         [StringLength(50, ErrorMessage = "Длина должности не должна превышать 50 символов")]
         public string?  Position { get; set; }
 
-        // Navigation property to Pass (one-to-many relationship)
+        // Передаваемое свойство навигации (отношение "один ко многим")
         public ICollection<Pass>? Passes { get; set; }
     }
 }
