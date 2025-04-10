@@ -1,0 +1,33 @@
+﻿@page
+@model checkpoint.Pages.FormModel
+@{
+    ViewData["Title"] = "Форма регистрации";
+}
+
+<h2>Студент</h2>
+<form method="post" asp-page-handler="Student">
+    <input asp-for="Student.FirstName" placeholder="Имя" required />
+    <input asp-for="Student.LastName" placeholder="Фамилия" required />
+    <input asp-for="Student.MiddleName" placeholder="Отчество" />
+    <input asp-for="Student.BirthDate" type="date" required />
+    <input asp-for="Student.GroupNumber" placeholder="Номер группы" required />
+    <input asp-for="Student.Specialty" placeholder="Специальность" required />
+    <button type="submit">Сохранить студента</button>
+</form>
+
+<h2>Работник</h2>
+<form method="post" asp-page-handler="Employee">
+    <input asp-for="Employee.FirstName" placeholder="Имя" required />
+    <input asp-for="Employee.LastName" placeholder="Фамилия" required />
+    <input asp-for="Employee.MiddleName" placeholder="Отчество" />
+    <input asp-for="Employee.Position" placeholder="Должность" required />
+    <button type="submit">Сохранить работника</button>
+</form>
+
+<h2>Посетитель</h2>
+<form method="post" asp-page-handler="Visitor">
+    <input asp-for="Visitor.FirstName" placeholder="Имя" required />
+    <input asp-for="Visitor.LastName" placeholder="Фамилия" required />
+    <input asp-for="Visitor.MiddleName" placeholder="Отчество" />
+    <button type="submit">Сохранить посетителя</button>
+</form>
