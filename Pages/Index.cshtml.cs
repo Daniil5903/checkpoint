@@ -1,14 +1,15 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using checkpoint.Models;
 using Microsoft.EntityFrameworkCore;
+using checkpoint.Data;
 
 namespace checkpoint.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly AppDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public IndexModel(AppDbContext context)
+        public IndexModel(ApplicationDbContext context)
         {
             _context = context;
         }

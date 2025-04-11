@@ -1,12 +1,13 @@
 ﻿using checkpoint.Models;
 using checkpoint;
 using Microsoft.AspNetCore.Mvc;
+using checkpoint.Data;
 
 public class FormController : Controller
 {
-    private readonly AppDbContext _context;
+    private readonly ApplicationDbContext _context;
 
-    public FormController(AppDbContext context)
+    public FormController(ApplicationDbContext context)
     {
         _context = context;
     }
