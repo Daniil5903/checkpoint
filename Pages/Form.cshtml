@@ -19,6 +19,7 @@
 <form method="post" asp-page-handler="Employee">
     <input asp-for="Employee.Name" placeholder="Имя" required />
     <input asp-for="Employee.Surname" placeholder="Фамилия" required />
+    <input asp-for="Employee.Patronymic" placeholder="Отчество" required />
     <input asp-for="Employee.Position" placeholder="Должность" required />
     <button type="submit">Сохранить работника</button>
 </form>

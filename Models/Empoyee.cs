@@ -15,6 +15,9 @@ namespace checkpoint.Models
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Длина фамилии должна быть от 2 до 50 символов")]
         public string? Surname { get; set; }
 
+        [StringLength(50)]
+        public string? Patronymic { get; set; }
+
         [Required(ErrorMessage = "Должность обязательна для заполнения")]
         [StringLength(50, ErrorMessage = "Длина должности не должна превышать 50 символов")]
         public string?  Position { get; set; }
