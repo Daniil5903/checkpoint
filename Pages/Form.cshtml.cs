@@ -15,13 +15,13 @@ namespace checkpoint.Pages
         }
 
         [BindProperty]
-        public Student Student { get; set; }
+        public Student Student { get; set; } = null!;
 
         [BindProperty]
-        public Employee Employee { get; set; }
+        public Employee Employee { get; set; } = null!;
 
         [BindProperty]
-        public Visitor Visitor { get; set; }
+        public Visitor Visitor { get; set; } = null!;
 
         public void OnGet()
         {
