@@ -24,10 +24,10 @@
                 <a class="nav-link" href="/Students">Студенты</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/Employer">Работники</a>
+                <a class="nav-link" href="/Employees">Работники</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/Visitor">Посетители</a>
+                <a class="nav-link" href="/Visitors">Посетители</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/Form">Информация о проходящих через КПП</a>
@@ -35,26 +35,6 @@
         </ul>
     </div>
 </nav>
-<h2 class="mt-4">Недавние посетители</h2>
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Имя</th>
-            <th>Фамилия</th>
-            <th>Отчество</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var visitor in Model.Visitors)
-        {
-            <tr>
-                <td>@visitor.Name</td>
-                <td>@visitor.Surname</td>
-                <td>@visitor.Patronymic</td>
-            </tr>
-        }
-    </tbody>
-</table>
 <style>
     .kpp-description 
     {

@@ -14,7 +14,7 @@ namespace checkpoint.Pages.Visitors
             _context = context;
         }
 
-        public IList<Visitor> Visitors { get; set; }
+        public IList<Visitor> Visitors { get; set; } = null!;
 
         public async Task OnGetAsync()
         {
