@@ -1,0 +1,34 @@
+﻿@page
+@model checkpoint.Pages.EmployeesModel
+@{
+    ViewData["Title"] = "Работники";
+}
+
+<h2>Работники</h2>
+<a class="btn btn-primary mb-3" asp-page="Create">Добавить Работника</a>
+
+<table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Отчество</th>
+            <th>Должность</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model.Employees)
+        {
+            <tr>
+                <td>@employee.Name</td>
+                <td>@employee.Surname</td>
+                <td>@employee.Patronymic</td>
+                <td>@employee.Position</td>
+                <td>
+                    <a class="btn btn-sm btn-info" asp-page="Edit" asp-route-id="@employee.Id">Изменить</a>
+                    <a class="btn btn-sm btn-danger" asp-page="Delete" asp-route-id="@employee.Id">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
