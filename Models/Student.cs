@@ -31,7 +31,6 @@ namespace checkpoint.Models
         [StringLength(100, ErrorMessage = "Длина специальности не должна превышать 100 символов")]
         public string? Specialty { get; set; }
 
-        // Navigation property to Pass (one-to-many relationship)
-        public ICollection<Pass>? Passes { get; set; }
+
     }
 }
