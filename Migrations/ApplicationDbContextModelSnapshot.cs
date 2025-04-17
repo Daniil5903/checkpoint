@@ -47,10 +47,10 @@ namespace checkpoint.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CheckpointEmployers");
+                    b.ToTable("CheckpointEmployees");
                 });
 
-            modelBuilder.Entity("checkpoint.Models.Employer", b =>
+            modelBuilder.Entity("checkpoint.Models.Employee", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -75,7 +75,7 @@ namespace checkpoint.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Employers");
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("checkpoint.Models.Pass", b =>

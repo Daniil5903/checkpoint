@@ -12,7 +12,7 @@ namespace checkpoint.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "CheckpointEmployers",
+                name: "CheckpointEmployees",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -27,7 +27,7 @@ namespace checkpoint.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Employers",
+                name: "Employees",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -136,7 +136,7 @@ namespace checkpoint.Migrations
                 name: "Passes");
 
             migrationBuilder.DropTable(
-                name: "Employers");
+                name: "Employees");
 
             migrationBuilder.DropTable(
                 name: "Students");
