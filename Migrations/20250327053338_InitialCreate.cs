@@ -23,7 +23,7 @@ namespace checkpoint.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CheckpointEmployers", x => x.Id);
+                    table.PrimaryKey("PK_CheckpointEmployees", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -38,7 +38,7 @@ namespace checkpoint.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Employers", x => x.Id);
+                    table.PrimaryKey("PK_Employees", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -94,9 +94,9 @@ namespace checkpoint.Migrations
                 {
                     table.PrimaryKey("PK_Passes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Passes_Employers_EmployeeId",
+                        name: "FK_Passes_Employees_EmployeeId",
                         column: x => x.EmployeeId,
-                        principalTable: "Employers",
+                        principalTable: "Employees",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Passes_Students_StudentId",
@@ -130,7 +130,7 @@ namespace checkpoint.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CheckpointEmployers");
+                name: "CheckpointEmployees");
 
             migrationBuilder.DropTable(
                 name: "Passes");

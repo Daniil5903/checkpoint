@@ -18,7 +18,7 @@ namespace checkpoint.Data
         public DbSet<Employee> Employees { get; set; } = null!;  //таблица Employee, содержащая данные о сотрудниках.
         public DbSet<Student> Students { get; set; } = null!; //таблица Students, содержащая данные о студентах.
         public DbSet<Pass> Passes{ get; set; } = null!; //таблица Pass, хранящая информацию о пропусках.
-        public DbSet<CheckpointEmployee> CheckpointEmployers { get; set; } = null!; //таблица CheckpointEmployer, хранящая информацию о сотрудниках КПП.
+        public DbSet<CheckpointEmployee> CheckpointEmployees { get; set; } = null!; //таблица CheckpointEmployer, хранящая информацию о сотрудниках КПП.
         public DbSet<Visitor> Visitors { get; set; } = null!; //таблица Visitor, хранящая информацию о посетителях.
     }
 }

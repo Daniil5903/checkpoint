@@ -22,7 +22,7 @@ namespace checkpoint.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("checkpoint.Models.CheckpointEmployer", b =>
+            modelBuilder.Entity("checkpoint.Models.CheckpointEmployee", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -199,7 +199,7 @@ namespace checkpoint.Migrations
 
             modelBuilder.Entity("checkpoint.Models.Pass", b =>
                 {
-                    b.HasOne("checkpoint.Models.Employer", "Employee")
+                    b.HasOne("checkpoint.Models.Employee", "Employee")
                         .WithMany("Passes")
                         .HasForeignKey("EmployeeId");
 
@@ -218,7 +218,7 @@ namespace checkpoint.Migrations
                     b.Navigation("Visitor");
                 });
 
-            modelBuilder.Entity("checkpoint.Models.Employer", b =>
+            modelBuilder.Entity("checkpoint.Models.Employee", b =>
                 {
                     b.Navigation("Passes");
                 });
