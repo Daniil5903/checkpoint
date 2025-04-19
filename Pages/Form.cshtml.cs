@@ -35,7 +35,7 @@ namespace checkpoint.Pages
             _context.Students.Add(Student);
             _context.SaveChanges();
 
-            return RedirectToPage();
+            return RedirectToPage("/Student");
         }
 
         public IActionResult OnPostEmployee()
@@ -46,7 +46,7 @@ namespace checkpoint.Pages
             _context.Employees.Add(Employee);
             _context.SaveChanges();
 
-            return RedirectToPage();
+            return RedirectToPage("/Employees");
         }
 
         public IActionResult OnPostVisitor()
@@ -57,7 +57,7 @@ namespace checkpoint.Pages
             _context.Visitors.Add(Visitor);
             _context.SaveChanges();
 
-            return RedirectToPage();
+            return RedirectToPage("/Visitors/Index");
         }
     }
 }
