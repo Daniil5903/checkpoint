@@ -11,7 +11,7 @@ namespace checkpoint.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Passes_Employers_EmployeeId",
+                name: "FK_Passes_Employees_EmployeeId",
                 table: "Passes");
 
             migrationBuilder.DropForeignKey(
@@ -19,10 +19,10 @@ namespace checkpoint.Migrations
                 table: "Passes");
 
             migrationBuilder.DropTable(
-                name: "CheckpointEmployers");
+                name: "CheckpointEmployees");
 
             migrationBuilder.DropTable(
-                name: "Employers");
+                name: "Employees");
 
             migrationBuilder.DropIndex(
                 name: "IX_Passes_EmployeeId",
@@ -118,7 +118,7 @@ namespace checkpoint.Migrations
                 nullable: true);
 
             migrationBuilder.CreateTable(
-                name: "CheckpointEmployers",
+                name: "CheckpointEmployees",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -129,11 +129,11 @@ namespace checkpoint.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CheckpointEmployers", x => x.Id);
+                    table.PrimaryKey("PK_CheckpointEmployees", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Employers",
+                name: "Employees",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -144,7 +144,7 @@ namespace checkpoint.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Employers", x => x.Id);
+                    table.PrimaryKey("PK_Employees", x => x.Id);
                 });
 
             migrationBuilder.CreateIndex(
@@ -158,10 +158,10 @@ namespace checkpoint.Migrations
                 column: "VisitorId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Passes_Employers_EmployeeId",
+                name: "FK_Passes_Employees_EmployeeId",
                 table: "Passes",
                 column: "EmployeeId",
-                principalTable: "Employers",
+                principalTable: "Employees",
                 principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
