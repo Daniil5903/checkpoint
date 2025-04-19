@@ -1,11 +1,11 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Посетители";
+    ViewData["Title"] = "Гости";
 }
 
 <h2>Посетители</h2>
-<a class="btn btn-primary mb-3" asp-page="Create">Добавить посетителя</a>
+<a class="btn btn-primary mb-3" asp-page="/Form" asp-route-id=" @@student.Id" asp-route-type="student">Добавить гостя</a>
 
 <table class="table table-bordered table-striped">
     <thead class="thead-dark">
