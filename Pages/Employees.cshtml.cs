@@ -12,7 +12,7 @@ namespace checkpoint.Pages
         {
             _context = context;
         }
-        public IList<Employee> Employees { get; set; } = null!;
+        public List<Employee> Employees { get; set; } = new List<Employee>();
         public async Task OnGetAsync()
         {
             Employees = await _context.Employees.ToListAsync();

@@ -12,7 +12,7 @@ namespace checkpoint.Pages
         {
             _context = context;
         }
-        public IList<Student> Students { get; set; } = null!;
+        public List<Student> Students { get; set; } = new List<Student>();
         public async Task OnGetAsync()
         {
             Students = await _context.Students.ToListAsync();
