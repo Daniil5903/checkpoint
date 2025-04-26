@@ -26,7 +26,6 @@ namespace checkpoint.Migrations
                 {
                     table.PrimaryKey("PK_CheckpointEmployees", x => x.Id);
                 });
-
             migrationBuilder.CreateTable(
                 name: "Employees",
                 columns: table => new
@@ -42,7 +41,6 @@ namespace checkpoint.Migrations
                 {
                     table.PrimaryKey("PK_Employees", x => x.Id);
                 });
-
             migrationBuilder.CreateTable(
                 name: "Students",
                 columns: table => new
@@ -60,7 +58,6 @@ namespace checkpoint.Migrations
                 {
                     table.PrimaryKey("PK_Students", x => x.Id);
                 });
-
             migrationBuilder.CreateTable(
                 name: "Visitors",
                 columns: table => new
@@ -75,7 +72,6 @@ namespace checkpoint.Migrations
                 {
                     table.PrimaryKey("PK_Visitors", x => x.Id);
                 });
-
             migrationBuilder.CreateTable(
                 name: "Passes",
                 columns: table => new
@@ -101,28 +97,22 @@ namespace checkpoint.Migrations
                         principalTable: "Students",
                         principalColumn: "Id");
                 });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Passes_StudentId",
                 table: "Passes",
                 column: "StudentId");
         }
-
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "CheckpointEmployees");
-
             migrationBuilder.DropTable(
                 name: "Employees");
-
             migrationBuilder.DropTable(
                 name: "Passes");
-
             migrationBuilder.DropTable(
                 name: "Visitors");
-
             migrationBuilder.DropTable(
                 name: "Students");
         }

@@ -6,18 +6,15 @@ using checkpoint.Data;
 public class FormController : Controller
 {
     private readonly ApplicationDbContext _context;
-
     public FormController(ApplicationDbContext context)
     {
         _context = context;
     }
-
     [HttpGet]
     public IActionResult Index()
     {
         return View();
     }
-
     [HttpPost]
     public IActionResult SubmitStudent(Student student)
     {
@@ -29,7 +26,6 @@ public class FormController : Controller
         }
         return View("Index");
     }
-
     [HttpPost]
     public IActionResult SubmitEmployee(Employee employee)
     {
@@ -41,7 +37,6 @@ public class FormController : Controller
         }
         return View("Index");
     }
-
     [HttpPost]
     public IActionResult SubmitVisitor(Visitor visitor)
     {

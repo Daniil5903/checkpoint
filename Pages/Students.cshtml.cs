@@ -8,18 +8,14 @@ namespace checkpoint.Pages
     public class StudentsModel : PageModel
     {
         private readonly ApplicationDbContext _context;
-
         public StudentsModel(ApplicationDbContext context)
         {
             _context = context;
         }
-
         public IList<Student> Students { get; set; } = null!;
-
         public async Task OnGetAsync()
         {
             Students = await _context.Students.ToListAsync();
         }
-
     }
 }

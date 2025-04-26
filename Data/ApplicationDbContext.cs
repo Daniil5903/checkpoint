@@ -14,7 +14,6 @@ namespace checkpoint.Data
         {
             //  Удалили Database.Migrate()
         }
-
         public DbSet<Employee> Employees { get; set; } = null!;  //таблица Employee, содержащая данные о сотрудниках.
         public DbSet<Student> Students { get; set; } = null!; //таблица Students, содержащая данные о студентах.
         public DbSet<Pass> Passes{ get; set; } = null!; //таблица Pass, хранящая информацию о пропусках.
