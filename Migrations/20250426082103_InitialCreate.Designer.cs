@@ -12,7 +12,7 @@ using checkpoint.Data;
 namespace checkpoint.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250327053338_InitialCreate")]
+    [Migration("20250426082103_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace checkpoint.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("checkpoint.Models.CheckpointEmployer", b =>
+            modelBuilder.Entity("checkpoint.Models.CheckpointEmployee", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -35,6 +35,10 @@ namespace checkpoint.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Patronymic")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -50,10 +54,10 @@ namespace checkpoint.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CheckpointEmployers");
+                    b.ToTable("CheckpointEmployees");
                 });
 
-            modelBuilder.Entity("checkpoint.Models.Employer", b =>
+            modelBuilder.Entity("checkpoint.Models.Employee", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,6 +67,10 @@ namespace checkpoint.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Patronymic")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -78,7 +86,7 @@ namespace checkpoint.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Employers");
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("checkpoint.Models.Pass", b =>
@@ -89,9 +97,6 @@ namespace checkpoint.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("EmployeeId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("ExpirationDate")
                         .HasColumnType("datetime2");
 
@@ -100,6 +105,14 @@ namespace checkpoint.Migrations
 
                     b.Property<DateTime>("IssueDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("OwnerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OwnerType")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("PassNumber")
                         .IsRequired()
@@ -119,16 +132,9 @@ namespace checkpoint.Migrations
                     b.Property<int?>("StudentId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("VisitorId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId");
-
                     b.HasIndex("StudentId");
-
-                    b.HasIndex("VisitorId");
 
                     b.ToTable("Passes");
                 });
@@ -202,36 +208,12 @@ namespace checkpoint.Migrations
 
             modelBuilder.Entity("checkpoint.Models.Pass", b =>
                 {
-                    b.HasOne("checkpoint.Models.Employer", "Employee")
-                        .WithMany("Passes")
-                        .HasForeignKey("EmployeeId");
-
-                    b.HasOne("checkpoint.Models.Student", "Student")
+                    b.HasOne("checkpoint.Models.Student", null)
                         .WithMany("Passes")
                         .HasForeignKey("StudentId");
-
-                    b.HasOne("checkpoint.Models.Visitor", "Visitor")
-                        .WithMany("Passes")
-                        .HasForeignKey("VisitorId");
-
-                    b.Navigation("Employee");
-
-                    b.Navigation("Student");
-
-                    b.Navigation("Visitor");
-                });
-
-            modelBuilder.Entity("checkpoint.Models.Employer", b =>
-                {
-                    b.Navigation("Passes");
                 });
 
             modelBuilder.Entity("checkpoint.Models.Student", b =>
-                {
-                    b.Navigation("Passes");
-                });
-
-            modelBuilder.Entity("checkpoint.Models.Visitor", b =>
                 {
                     b.Navigation("Passes");
                 });

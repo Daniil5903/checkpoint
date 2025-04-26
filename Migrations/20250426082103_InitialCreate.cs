@@ -19,6 +19,7 @@ namespace checkpoint.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Patronymic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Position = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
@@ -34,6 +35,7 @@ namespace checkpoint.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Patronymic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Position = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
@@ -86,44 +88,24 @@ namespace checkpoint.Migrations
                     ExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Purpose = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    StudentId = table.Column<int>(type: "int", nullable: true),
-                    EmployeeId = table.Column<int>(type: "int", nullable: true),
-                    VisitorId = table.Column<int>(type: "int", nullable: true)
+                    OwnerId = table.Column<int>(type: "int", nullable: false),
+                    OwnerType = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    StudentId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Passes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Passes_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "Id");
-                    table.ForeignKey(
                         name: "FK_Passes_Students_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Students",
                         principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Passes_Visitors_VisitorId",
-                        column: x => x.VisitorId,
-                        principalTable: "Visitors",
-                        principalColumn: "Id");
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Passes_EmployeeId",
-                table: "Passes",
-                column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Passes_StudentId",
                 table: "Passes",
                 column: "StudentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Passes_VisitorId",
-                table: "Passes",
-                column: "VisitorId");
         }
 
         /// <inheritdoc />
@@ -133,16 +115,16 @@ namespace checkpoint.Migrations
                 name: "CheckpointEmployees");
 
             migrationBuilder.DropTable(
-                name: "Passes");
-
-            migrationBuilder.DropTable(
                 name: "Employees");
 
             migrationBuilder.DropTable(
-                name: "Students");
+                name: "Passes");
 
             migrationBuilder.DropTable(
                 name: "Visitors");
+
+            migrationBuilder.DropTable(
+                name: "Students");
         }
     }
 }
