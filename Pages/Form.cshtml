@@ -6,8 +6,8 @@
 
 <h2>Студент</h2>
 <form method="post" asp-page-handler="Student">
-    <input asp-for="Student.Name" placeholder="Имя" required />
     <input asp-for="Student.Surname" placeholder="Фамилия" required />
+    <input asp-for="Student.Name" placeholder="Имя" required />
     <input asp-for="Student.Patronymic" placeholder="Отчество" />
     <input asp-for="Student.BirthDay" type="date" required />
     <input asp-for="Student.Group" placeholder="Номер группы" required />
@@ -17,8 +17,8 @@
 
 <h2>Работник</h2>
 <form method="post" asp-page-handler="Employee">
-    <input asp-for="Employee.Name" placeholder="Имя" required />
     <input asp-for="Employee.Surname" placeholder="Фамилия" required />
+    <input asp-for="Employee.Name" placeholder="Имя" required />
     <input asp-for="Employee.Patronymic" placeholder="Отчество" required />
     <input asp-for="Employee.Position" placeholder="Должность" required />
     <button type="submit">Сохранить работника</button>
@@ -26,8 +26,8 @@
 
 <h2>Гость</h2>
 <form method="post" asp-page-handler="Visitor">
-    <input asp-for="Visitor.Name" placeholder="Имя" required />
     <input asp-for="Visitor.Surname" placeholder="Фамилия" required />
+    <input asp-for="Visitor.Name" placeholder="Имя" required />
     <input asp-for="Visitor.Patronymic" placeholder="Отчество" />
     <button type="submit">Сохранить гостя</button>
 </form>

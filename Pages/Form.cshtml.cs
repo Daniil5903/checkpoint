@@ -25,10 +25,8 @@ namespace checkpoint.Pages
         {
             if (!ModelState.IsValid)
                 return Page();
-
             _context.Students.Add(Student);
             _context.SaveChanges();
-
             return RedirectToPage("/Student");
         }
         public IActionResult OnPostEmployee()
