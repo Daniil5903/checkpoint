@@ -4,32 +4,40 @@
     ViewData["Title"] = "Добавить студента";
 }
 
-<h2>Добавить студента</h2>
+<h2 class="mb-4">Форма для проходящих через КПП</h2>
 
-<form method="post" asp-page-handler="Student">
-    <div class="form-group">
-        <label>Имя:</label>
-        <input asp-for="Student.Name" class="form-control" />
+<div class="row">
+    <!-- Карточка для Студента -->
+    <div class="col-md-4 mb-4">
+        <div class="card shadow p-4">
+            <h4 class="card-title mb-3">Добавить студента</h4>
+            <form method="post" asp-page-handler="Student">
+                <div class="form-group mb-2">
+                    <label>Имя:</label>
+                    <input asp-for="Student.Name" class="form-control" />
+                </div>
+                <div class="form-group mb-2">
+                    <label>Фамилия:</label>
+                    <input asp-for="Student.Surname" class="form-control" />
+                </div>
+                <div class="form-group mb-2">
+                    <label>Отчество:</label>
+                    <input asp-for="Student.Patronymic" class="form-control" />
+                </div>
+                <div class="form-group mb-2">
+                    <label>Дата рождения:</label>
+                    <input asp-for="Student.BirthDay" type="date" class="form-control" />
+                </div>
+                <div class="form-group mb-2">
+                    <label>Группа:</label>
+                    <input asp-for="Student.Group" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Специальность:</label>
+                    <input asp-for="Student.Specialty" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-success mt-2">Сохранить студента</button>
+            </form>
+        </div>
     </div>
-    <div class="form-group">
-        <label>Фамилия:</label>
-        <input asp-for="Student.Surname" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label>Отчество:</label>
-        <input asp-for="Student.Patronymic" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label>Дата рождения:</label>
-        <input asp-for="Student.BirthDay" type="date" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label>Группа:</label>
-        <input asp-for="Student.Group" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label>Специальность:</label>
-        <input asp-for="Student.Specialty" class="form-control" />
-    </div>
-    <button type="submit" class="btn btn-primary">Сохранить</button>
-</form>
+</div>
