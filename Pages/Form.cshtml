@@ -1,142 +1,96 @@
 ﻿@page
 @model checkpoint.Pages.FormModel
 @{
-    ViewData["Title"] = "Форма регистрации";
+    ViewData["Title"] = "Добавить студента";
 }
 
-<h2>Студент</h2>
-<form method="post" asp-page-handler="Student" id="studentForm">
-    <input asp-for="Student.Surname" placeholder="Фамилия" required />
-    <input asp-for="Student.Name" placeholder="Имя" required />
-    <input asp-for="Student.Patronymic" placeholder="Отчество" />
-    <input asp-for="Student.BirthDay" type="date" required />
-    <input asp-for="Student.Group" placeholder="Номер группы" required />
-    <input asp-for="Student.Specialty" placeholder="Специальность" required />
-    <button type="submit">Сохранить студента</button>
-</form>
-<script>
-    document.getElementById('studentForm').addEventListener('submit', function (event) {
-        const name = document.querySelector('[name="Student.Name"]').value;
-        if (name.length < 2) {
-            alert('Имя студента должно содержать минимум 2 символа!');
-            event.preventDefault(); // отменяем отправку формы
-        }
-    });
-</script>
-<script>
-    document.getElementById('studentForm').addEventListener('submit', function (event) {
-        const name = document.querySelector('[name="Student.Surname"]').value;
-        if (name.length < 2) {
-            alert('Фамилия студента должна содержать минимум 2 символа!');
-            event.preventDefault(); // отменяем отправку формы
-        }
-    });
-</script>
-<script>
-    document.getElementById('studentForm').addEventListener('submit', function (event) {
-        const name = document.querySelector('[name="Student.Patronymic"]').value;
-        if (name.length < 5) {
-            alert('Отчество студента должно содержать минимум 5 символов!');
-            event.preventDefault(); // отменяем отправку формы
-        }
-    });
-</script>
-<script>
-    document.getElementById('studentForm').addEventListener('submit', function (event) {
-        const name = document.querySelector('[name="Student.Group"]').value;
-        if (name.length < 4) {
-            alert('Номер группы студента должен содержать минимум 4 символа!');
-            event.preventDefault(); // отменяем отправку формы
-        }
-    });
-</script>
-<script>
-    document.getElementById('studentForm').addEventListener('submit', function (event) {
-        const name = document.querySelector('[name="Student.Specialty"]').value;
-        if (name.length < 2) {
-            alert('Специальность студента должна содержать минимум 2 символа!');
-            event.preventDefault(); // отменяем отправку формы
-        }
-    });
-</script>
-<h2>Работник</h2>
-<form method="post" asp-page-handler="Employee" id="employeeForm">
-    <input asp-for="Employee.Surname" placeholder="Фамилия" required />
-    <input asp-for="Employee.Name" placeholder="Имя" required />
-    <input asp-for="Employee.Patronymic" placeholder="Отчество" required />
-    <input asp-for="Employee.Position" placeholder="Должность" required />
-    <button type="submit">Сохранить работника</button>
-</form>
-<script>
-    document.getElementById('employeeForm').addEventListener('submit', function (event) {
-        const name = document.querySelector('[name="Employee.Name"]').value;
-        if (name.length < 2) {
-            alert('Имя работника должно содержать минимум 2 символа!');
-            event.preventDefault(); // отменяем отправку формы
-        }
-    });
-</script>
-<script>
-    document.getElementById('employeeForm').addEventListener('submit', function (event) {
-        const name = document.querySelector('[name="Employee.Surname"]').value;
-        if (name.length < 2) {
-            alert('Фамилия работника должна содержать минимум 2 символа!');
-            event.preventDefault(); // отменяем отправку формы
-        }
-    });
-</script>
-<script>
-    document.getElementById('employeeForm').addEventListener('submit', function (event) {
-        const name = document.querySelector('[name="Employee.Patronymic"]').value;
-        if (name.length < 5) {
-            alert('Отчество работника должно содержать минимум 5 символов!');
-            event.preventDefault(); // отменяем отправку формы
-        }
-    });
-</script>
-<script>
-    document.getElementById('employeeForm').addEventListener('submit', function (event) {
-        const name = document.querySelector('[name="Employee.Position"]').value;
-        if (name.length < 2) {
-            alert('Должность работника должна содержать минимум 2 символа!');
-            event.preventDefault(); // отменяем отправку формы
-        }
-    });
-</script>
+<h2 class="mb-4">Форма для проходящих через КПП</h2>
 
-<h2>Гость</h2>
-<form method="post" asp-page-handler="Visitor" id="visitorForm">
-    <input asp-for="Visitor.Surname" placeholder="Фамилия" required />
-    <input asp-for="Visitor.Name" placeholder="Имя" required />
-    <input asp-for="Visitor.Patronymic" placeholder="Отчество" />
-    <button type="submit">Сохранить гостя</button>
-</form>
+<div class="row">
+    <!-- Карточка для Студента -->
+    <div class="col-md-4 mb-4">
+        <div class="card shadow p-4">
+            <h4 class="card-title mb-3">Добавить студента</h4>
+            <form method="post" asp-page-handler="Student" id="studentForm">
+                <div class="form-group mb-2">
+                    <label>Имя:</label>
+                    <input asp-for="Student.Name" class="form-control id=" studentName"" />
+                    <div id="nameError" class="text-danger"></div> <!-- Ошибка для имени -->
+                </div>
+                <div class="form-group mb-2">
+                    <label>Фамилия:</label>
+                    <input asp-for="Student.Surname" class="form-control" id="studentSurname" />
+                    <div id="surnameError" class="text-danger"></div> <!-- Ошибка для фамилии -->
+                </div>
+                <div class="form-group mb-2">
+                    <label>Отчество:</label>
+                    <input asp-for="Student.Patronymic" class="form-control" id="studentPatronymic" />
+                    <div id="patronymicError" class="text-danger"></div> <!-- Ошибка для отчества -->
+                </div>
+                <div class="form-group mb-2">
+                    <label>Дата рождения:</label>
+                    <input asp-for="Student.BirthDay" type="date" class="form-control" id="studentBirthDay" />
+                    <div id="birthDayError" class="text-danger"></div> <!-- Ошибка для даты рождения -->
+                </div>
+                <div class="form-group mb-2">
+                    <label>Группа:</label>
+                    <input asp-for="Student.Group" class="form-control" id="studentGroup" />
+                    <div id="groupError" class="text-danger"></div> <!-- Ошибка для группы -->
+                </div>
+                <div class="form-group">
+                    <label>Специальность:</label>
+                    <input asp-for="Student.Specialty" class="form-control" id="studentSpecialty" />
+                    <div id="specialtyError" class="text-danger"></div> <!-- Ошибка для специальности -->
+                </div>
+                <button type="submit" class="btn btn-success mt-2">Сохранить студента</button>
+            </form>
+        </div>
+    </div>
+</div>
 <script>
-    document.getElementById('visitorForm').addEventListener('submit', function (event) {
-        const name = document.querySelector('[name="Visitor.Name"]').value;
+    document.getElementById('studentForm').addEventListener('submit', function (event) {
+        let isValid = true;
+        // Очистить ошибки перед каждой новой проверкой
+        document.getElementById('nameError').textContent = '';
+        document.getElementById('surnameError').textContent = '';
+        document.getElementById('patronymicError').textContent = '';
+        document.getElementById('birthDayError').textContent = '';
+        document.getElementById('groupError').textContent = '';
+        document.getElementById('specialtyError').textContent = '';
+        // Получаем значения полей
+        const name = document.querySelector('[name="Student.Name"]').value.trim();
+        const surname = document.querySelector('[name="Student.Surname"]').value.trim();
+        const patronymic = document.querySelector('[name="Student.Patronymic"]').value.trim();
+        const birthDay = document.querySelector('[name="Student.BirthDay"]').value.trim();
+        const group = document.querySelector('[name="Student.Group"]').value.trim();
+        const specialty = document.querySelector('[name="Student.Specialty"]').value.trim();
+        // Проверяем каждое поле
         if (name.length < 2) {
-            alert('Имя гостя должно содержать минимум 2 символа!');
-            event.preventDefault(); // отменяем отправку формы
+            isValid = false;
+            document.getElementById('nameError').textContent = 'Имя должно содержать минимум 2 символа.';
+        }
+        if (surname.length < 2) {
+            isValid = false;
+            document.getElementById('surnameError').textContent = 'Фамилия должна содержать минимум 2 символа.';
+        }
+        if (!patronymic) {
+            document.getElementById('patronymicError').textContent = 'Отчество может быть пустым, но если оно есть, оно обязательно для заполнения.';
+        }
+        if (!birthDay) {
+            isValid = false;
+            document.getElementById('birthDayError').textContent = 'Дата рождения обязательна.';
+        }
+        if (group.length < 1) {
+            isValid = false;
+            document.getElementById('groupError').textContent = 'Группа обязательна.';
+        }
+        if (specialty.length < 1) {
+            isValid = false;
+            document.getElementById('specialtyError').textContent = 'Специальность обязательна.';
+        }
+        // Если данные некорректны — отменяем отправку формы
+        if (!isValid) {
+            event.preventDefault(); // Отменить отправку формы
         }
     });
 </script>
-<script>
-    document.getElementById('visitorForm').addEventListener('submit', function (event) {
-        const name = document.querySelector('[name="Visitor.Surname"]').value;
-        if (name.length < 2) {
-            alert('Фамилия гостя должна содержать минимум 2 символа!');
-            event.preventDefault(); // отменяем отправку формы
-        }
-    });
-</script>
-<script>
-    document.getElementById('visitorForm').addEventListener('submit', function (event) {
-        const name = document.querySelector('[name="Visitor.Patronymic"]').value;
-        if (name.length < 5) {
-            alert('Отчество гостя должно содержать минимум 5 символов!');
-            event.preventDefault(); // отменяем отправку формы
-        }
-    });
-</script>
-
-
