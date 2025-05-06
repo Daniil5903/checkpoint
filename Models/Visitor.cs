@@ -13,5 +13,6 @@ namespace checkpoint.Models
         public string? Surname { get; set; }
         [StringLength(50)]
         public string? Patronymic { get; set; }
+
     }
 }
