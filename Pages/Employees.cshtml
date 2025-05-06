@@ -1,34 +1,41 @@
 ﻿@page
 @model checkpoint.Pages.EmployeesModel
 @{
-    ViewData["Title"] = "Работники";
+    ViewData["Title"] = "Добавление сотрудника";
 }
 
-<h2>Работники</h2>
-<a class="btn btn-primary mb-3" asp-page="/Form" asp-route-id=" @@student.Id" asp-route-type="student">Добавить работника</a>
+<h2 class="mb-4">Добавить сотрудника</h2>
 
-<table class="table table-bordered table-striped">
-    <thead class="thead-dark">
-        <tr>
-            <th>Имя</th>
-            <th>Фамилия</th>
-            <th>Отчество</th>
-            <th>Должность</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var employee in Model.Employees)
-        {
-            <tr>
-                <td>@employee.Name</td>
-                <td>@employee.Surname</td>
-                <td>@employee.Patronymic</td>
-                <td>@employee.Position</td>
-                <td>
-                    <a class="btn btn-sm btn-info" asp-page="Edit" asp-route-id="@employee.Id">Изменить</a>
-                    <a class="btn btn-sm btn-danger" asp-page="Delete" asp-route-id="@employee.Id">Удалить</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<form method="post" class="card p-4 shadow-sm">
+    <div class="form-group mb-2">
+        <label>Имя:</label>
+        <input asp-for="Employee.Name" class="form-control" />
+    </div>
+    <div class="form-group mb-2">
+        <label>Фамилия:</label>
+        <input asp-for="Employee.Surname" class="form-control" />
+    </div>
+    <div class="form-group mb-2">
+        <label>Отчество:</label>
+        <input asp-for="Employee.Patronymic" class="form-control" />
+    </div>
+    <div class="form-group mb-2">
+        <label>Должность:</label>
+        <select asp-for="Employee.Position" class="form-control">
+            <option value="">-- Выберите должность --</option>
+            <option>Преподаватель</option>
+            <option>Уборщик</option>
+            <option>Охранник</option>
+            <option>Директор</option>
+        </select>
+    </div>
+    <div class="form-group mb-3">
+        <label>Цель прохода:</label>
+        <input asp-for="Purpose" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
