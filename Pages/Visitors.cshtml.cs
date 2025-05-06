@@ -1,21 +1,52 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using checkpoint.Models;
 using checkpoint.Data;
 
-namespace checkpoint.Pages.Visitors
+namespace checkpoint.Pages
 {
-    public class IndexModel : PageModel
+    public class VisitorsModel : PageModel
     {
         private readonly ApplicationDbContext _context;
-        public IndexModel(ApplicationDbContext context)
+
+        public VisitorsModel(ApplicationDbContext context)
         {
             _context = context;
         }
-        public List<Visitor> Visitors { get; set; } = new List<Visitor>();
-        public async Task OnGetAsync()
+
+        [BindProperty]
+        public Visitor Visitor { get; set; } = new();
+
+        [BindProperty]
+        public string Purpose { get; set; } = "";
+
+        public void OnGet() { }
+
+        public async Task<IActionResult> OnPostAsync()
         {
-            Visitors = await _context.Visitors.ToListAsync();
+            if (!ModelState.IsValid) return Page();
+
+            // Добавляем студента
+            _context.Visitors.Add(Visitor);
+            await _context.SaveChangesAsync();
+
+            // Создаем пропуск
+            var pass = new Pass
+            {
+                PassNumber = $"S-{Visitor.Id:D4}",
+                PassType = "Visitor",
+                IssueDate = DateTime.Now,
+                ExpirationDate = null,
+                Purpose = Purpose,
+                IsActive = true,
+                OwnerId = Visitor.Id,
+                OwnerType = "Visitor"
+            };
+
+            _context.Passes.Add(pass);
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage("Form");
         }
     }
 }
