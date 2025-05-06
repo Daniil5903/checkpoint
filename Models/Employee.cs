@@ -2,7 +2,7 @@
 
 namespace checkpoint.Models
 {
-    public class CheckpointEmployee
+    public class Employee
     {
         [Key]
         public int Id { get; set; }
@@ -19,4 +19,3 @@ namespace checkpoint.Models
         public string? Position { get; set; }
     }
 }
-
