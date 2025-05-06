@@ -1,5 +1,5 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using checkpoint.Models;
 using checkpoint.Data;
 
@@ -14,11 +14,39 @@ namespace checkpoint.Pages
             _context = context;
         }
 
-        public IList<Student> Students { get; set; } = new List<Student>();
+        [BindProperty]
+        public Student Student { get; set; } = new();
 
-        public async Task OnGetAsync()
+        [BindProperty]
+        public string Purpose { get; set; } = "";
+
+        public void OnGet() { }
+
+        public async Task<IActionResult> OnPostAsync()
         {
-            Students = await _context.Students.ToListAsync();
+            if (!ModelState.IsValid) return Page();
+
+            // Добавляем студента
+            _context.Students.Add(Student);
+            await _context.SaveChangesAsync();
+
+            // Создаем пропуск
+            var pass = new Pass
+            {
+                PassNumber = $"S-{Student.Id:D4}",
+                PassType = "Student",
+                IssueDate = DateTime.Now,
+                ExpirationDate = null,
+                Purpose = Purpose,
+                IsActive = true,
+                OwnerId = Student.Id,
+                OwnerType = "Student"
+            };
+
+            _context.Passes.Add(pass);
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage("Form");
         }
     }
 }
