@@ -12,7 +12,7 @@ using checkpoint.Data;
 namespace checkpoint.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250426082103_InitialCreate")]
+    [Migration("20250506112054_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
