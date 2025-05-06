@@ -4,48 +4,25 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace checkpoint.Models
 {
+
     public class Pass
     {
         [Key]
         public int Id { get; set; }
-
-        [Required(ErrorMessage = "Номер пропуска обязателен для заполнения")]
-        [StringLength(20, ErrorMessage = "Длина номера пропуска не должна превышать 20 символов")]
+        [Required, StringLength(20)]
         public string? PassNumber { get; set; }
-
-        [Required(ErrorMessage = "Тип пропуска обязателен для заполнения")]
-        [StringLength(20, ErrorMessage = "Длина типа пропуска не должна превышать 20 символов")]
+        [Required, StringLength(20)]
         public string? PassType { get; set; }
-
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime IssueDate { get; set; }
-
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime? ExpirationDate { get; set; } // Может быть null
-
-        [Required(ErrorMessage = "Цель посещения обязательна для заполнения")]
-        [StringLength(200, ErrorMessage = "Длина цели посещения не должна превышать 200 символов")]
+        public DateTime? ExpirationDate { get; set; }
+        [Required, StringLength(200)]
         public string? Purpose { get; set; }
-
         public bool IsActive { get; set; }
-
-        // Foreign Keys и Navigation Properties
-
-        // Student
-        public int? StudentId { get; set; } // Сделал nullable, чтобы можно было создать пропуск без привязки к студенту
-        [ForeignKey("StudentId")]
-        public Student? Student { get; set; }
-
-        // Employer
-        public int? EmployeeId { get; set; } // Сделал nullable
-        [ForeignKey("EmployeeId")]
-        public Employer? Employee { get; set; }
-
-        // Visitor
-        public int? VisitorId { get; set; } // Сделал nullable
-        [ForeignKey("VisitorId")]
-        public Visitor? Visitor { get; set; }
+        // Новый универсальный внешний ключ
+        public int OwnerId { get; set; }  // ID владельца пропуска
+        [Required, StringLength(10)]
+        public string? OwnerType { get; set; }  // "Student", "Employee" или "Visitor"
     }
 }
