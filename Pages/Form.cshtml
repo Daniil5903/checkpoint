@@ -14,17 +14,73 @@
             <th>Цель</th>
             <th>Дата и время входа</th>
             <th>Должность</th>
+            <th>Действия</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var pass in Model.Passes)
         {
             <tr>
-                <td>@pass.FullName</td>
-                <td>@pass.OwnerType</td>
-                <td>@pass.Purpose</td>
-                <td>@pass.IssueDate.ToString("dd.MM.yyyy HH:mm:ss")</td>
-                <td>@(pass.Position ?? "-")</td>
+                @if (Model.EditingPassId == pass.PassId)
+                {
+                    <form method="post" asp-page-handler="Save">
+                        <input type="hidden" name="passId" value="@pass.PassId" />
+                    <td>
+                        <div class="row g-1">
+                            <div class="col">
+                                <input type="text" name="EditedSurname" value="@pass.Surname" class="form-control" placeholder="Фамилия" />
+                            </div>
+                            <div class="col">
+                                <input type="text" name="EditedName" value="@pass.Name" class="form-control" placeholder="Имя" />
+                            </div>
+                            <div class="col">
+                                <input type="text" name="EditedPatronymic" value="@pass.Patronymic" class="form-control" placeholder="Отчество" />
+                            </div>
+                        </div>
+                    </td>
+                    <td>@pass.OwnerType</td>
+                    <td>
+                        <input type="text" name="EditedPurpose" value="@pass.Purpose" class="form-control" />
+                    </td>
+                    <td>@pass.IssueDate.ToString("dd.MM.yyyy HH:mm:ss")</td>
+                    <td>
+                        @if (pass.OwnerType == "Employee")
+                        {
+                            <select name="EditedPosition" class="form-select">
+                                <option value="Преподаватель" selected="@(pass.Position == "Преподаватель")">Преподаватель</option>
+                                <option value="Директор" selected="@(pass.Position == "Директор")">Директор</option>
+                                <option value="Уборщик" selected="@(pass.Position == "Уборщик")">Уборщик</option>
+                                <option value="Охранник" selected="@(pass.Position == "Охранник")">Охранник</option>
+                            </select>
+                        }
+                        else
+                        {
+                            @(pass.Position ?? "-")
+                        }
+                    </td>
+                    <td>
+                        <button type="submit" class="btn-success btn-sm btn-flat">Сохранить</button>
+                    </td>
+                    </form>
+                }
+                else
+                {
+                    <td>@pass.FullName</td>
+                    <td>@pass.OwnerType</td>
+                    <td>@pass.Purpose</td>
+                    <td>@pass.IssueDate.ToString("dd.MM.yyyy HH:mm:ss")</td>
+                    <td>@(pass.Position ?? "-")</td>
+                    <td>
+                        <form method="post" asp-page-handler="Edit" style="display:inline;">
+                            <input type="hidden" name="passId" value="@pass.PassId" />
+                            <button type="submit" class="btn-outline-dark btn-sm btn-flat">Изменить</button>
+                        </form>
+                        <form method="post" asp-page-handler="Delete" style="display:inline;">
+                            <input type="hidden" name="passId" value="@pass.PassId" />
+                            <button type="submit" class="btn-outline-danger btn-sm btn-flat" onclick="return confirm('Удалить запись?')">Удалить</button>
+                        </form>
+                    </td>
+                }
             </tr>
         }
     </tbody>
