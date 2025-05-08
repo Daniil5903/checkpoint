@@ -6,6 +6,13 @@
 
 <h2 class="mb-4">Журнал проходящих через КПП</h2>
 
+@if (!ViewData.ModelState.IsValid && Model.EditingPassId != null)
+{
+    <div class="alert alert-danger">
+        Пожалуйста, исправьте ошибки в форме перед сохранением.
+    </div>
+}
+
 <table class="table table-bordered table-striped">
     <thead class="table-dark">
         <tr>
@@ -23,44 +30,43 @@
             <tr>
                 @if (Model.EditingPassId == pass.PassId)
                 {
-                    <td colspan="6">
-                        <form method="post" asp-page-handler="Save">
-                            <input type="hidden" name="passId" value="@pass.PassId" />
+                    <form method="post" asp-page-handler="Save">
+                        <input type="hidden" name="passId" value="@pass.PassId" />
+                    <td>
+                        <input asp-for="EditedSurname" class="form-control @(ViewData.ModelState["EditedSurname"]?.Errors.Count > 0 ? "is-invalid" : "")" placeholder="Фамилия" />
+                        <span asp-validation-for="EditedSurname" class="text-danger small"></span>
 
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <input asp-for="EditedSurname" class="form-control mb-1" placeholder="Фамилия" />
-                                    <span asp-validation-for="EditedSurname" class="text-danger"></span>
-                                </div>
-                                <div class="col-md-3">
-                                    <input asp-for="EditedName" class="form-control mb-1" placeholder="Имя" />
-                                    <span asp-validation-for="EditedName" class="text-danger"></span>
-                                </div>
-                                <div class="col-md-3">
-                                    <input asp-for="EditedPatronymic" class="form-control mb-1" placeholder="Отчество" />
-                                    <span asp-validation-for="EditedPatronymic" class="text-danger"></span>
-                                </div>
-                                <div class="col-md-3">
-                                    @if (pass.OwnerType == "Employee")
-                                    {
-                                        <select asp-for="EditedPosition" class="form-select mb-1">
-                                            <option value="">Выберите должность</option>
-                                            <option>Преподаватель</option>
-                                            <option>Директор</option>
-                                            <option>Уборщик</option>
-                                            <option>Охранник</option>
-                                        </select>
-                                        <span asp-validation-for="EditedPosition" class="text-danger"></span>
-                                    }
-                                </div>
-                            </div>
+                        <input asp-for="EditedName" class="form-control mt-1 @(ViewData.ModelState["EditedName"]?.Errors.Count > 0 ? "is-invalid" : "")" placeholder="Имя" />
+                        <span asp-validation-for="EditedName" class="text-danger small"></span>
 
-                            <input asp-for="EditedPurpose" class="form-control mb-1" placeholder="Цель" />
-                            <span asp-validation-for="EditedPurpose" class="text-danger"></span>
-
-                            <button type="submit" class="btn btn-success btn-sm mt-2">Сохранить</button>
-                        </form>
+                        <input asp-for="EditedPatronymic" class="form-control mt-1 @(ViewData.ModelState["EditedPatronymic"]?.Errors.Count > 0 ? "is-invalid" : "")" placeholder="Отчество" />
+                        <span asp-validation-for="EditedPatronymic" class="text-danger small"></span>
                     </td>
+                    <td>@pass.OwnerType</td>
+                    <td>
+                        <input asp-for="EditedPurpose" class="form-control @(ViewData.ModelState["EditedPurpose"]?.Errors.Count > 0 ? "is-invalid" : "")" placeholder="Цель посещения" />
+                        <span asp-validation-for="EditedPurpose" class="text-danger small"></span>
+                    </td>
+                    <td>@pass.IssueDate.ToString("dd.MM.yyyy HH:mm:ss")</td>
+                    <td>
+                        @if (pass.OwnerType == "Employee")
+                        {
+                            <select asp-for="EditedPosition" class="form-select">
+                                <option value="Преподаватель">Преподаватель</option>
+                                <option value="Директор">Директор</option>
+                                <option value="Уборщик">Уборщик</option>
+                                <option value="Охранник">Охранник</option>
+                            </select>
+                        }
+                        else
+                        {
+                            @(pass.Position ?? "-")
+                        }
+                    </td>
+                    <td>
+                        <button type="submit" class="btn-outline-success btn-outline-success btn-sm ">Сохранить</button>
+                    </td>
+                    </form>
                 }
                 else
                 {
@@ -72,11 +78,11 @@
                     <td>
                         <form method="post" asp-page-handler="Edit" style="display:inline;">
                             <input type="hidden" name="passId" value="@pass.PassId" />
-                            <button type="submit" class="btn btn-sm btn-warning">Изменить</button>
+                            <button type="submit" class="btn-outline-dark btn-sm btn-group-lg">Изменить</button>
                         </form>
                         <form method="post" asp-page-handler="Delete" style="display:inline;">
                             <input type="hidden" name="passId" value="@pass.PassId" />
-                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Удалить запись?')">Удалить</button>
+                            <button type="submit" class="btn-outline-danger btn-sm btn-Float" onclick="return confirm('Удалить запись?')">Удалить</button>
                         </form>
                     </td>
                 }
