@@ -23,45 +23,44 @@
             <tr>
                 @if (Model.EditingPassId == pass.PassId)
                 {
-                    <form method="post" asp-page-handler="Save">
-                        <input type="hidden" name="passId" value="@pass.PassId" />
-                    <td>
-                        <div class="row g-1">
-                            <div class="col">
-                                <input type="text" name="EditedSurname" value="@pass.Surname" class="form-control" placeholder="Фамилия" />
+                    <td colspan="6">
+                        <form method="post" asp-page-handler="Save">
+                            <input type="hidden" name="passId" value="@pass.PassId" />
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <input asp-for="EditedSurname" class="form-control mb-1" placeholder="Фамилия" />
+                                    <span asp-validation-for="EditedSurname" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3">
+                                    <input asp-for="EditedName" class="form-control mb-1" placeholder="Имя" />
+                                    <span asp-validation-for="EditedName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3">
+                                    <input asp-for="EditedPatronymic" class="form-control mb-1" placeholder="Отчество" />
+                                    <span asp-validation-for="EditedPatronymic" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3">
+                                    @if (pass.OwnerType == "Employee")
+                                    {
+                                        <select asp-for="EditedPosition" class="form-select mb-1">
+                                            <option value="">Выберите должность</option>
+                                            <option>Преподаватель</option>
+                                            <option>Директор</option>
+                                            <option>Уборщик</option>
+                                            <option>Охранник</option>
+                                        </select>
+                                        <span asp-validation-for="EditedPosition" class="text-danger"></span>
+                                    }
+                                </div>
                             </div>
-                            <div class="col">
-                                <input type="text" name="EditedName" value="@pass.Name" class="form-control" placeholder="Имя" />
-                            </div>
-                            <div class="col">
-                                <input type="text" name="EditedPatronymic" value="@pass.Patronymic" class="form-control" placeholder="Отчество" />
-                            </div>
-                        </div>
+
+                            <input asp-for="EditedPurpose" class="form-control mb-1" placeholder="Цель" />
+                            <span asp-validation-for="EditedPurpose" class="text-danger"></span>
+
+                            <button type="submit" class="btn btn-success btn-sm mt-2">Сохранить</button>
+                        </form>
                     </td>
-                    <td>@pass.OwnerType</td>
-                    <td>
-                        <input type="text" name="EditedPurpose" value="@pass.Purpose" class="form-control" />
-                    </td>
-                    <td>@pass.IssueDate.ToString("dd.MM.yyyy HH:mm:ss")</td>
-                    <td>
-                        @if (pass.OwnerType == "Employee")
-                        {
-                            <select name="EditedPosition" class="form-select">
-                                <option value="Преподаватель" selected="@(pass.Position == "Преподаватель")">Преподаватель</option>
-                                <option value="Директор" selected="@(pass.Position == "Директор")">Директор</option>
-                                <option value="Уборщик" selected="@(pass.Position == "Уборщик")">Уборщик</option>
-                                <option value="Охранник" selected="@(pass.Position == "Охранник")">Охранник</option>
-                            </select>
-                        }
-                        else
-                        {
-                            @(pass.Position ?? "-")
-                        }
-                    </td>
-                    <td>
-                        <button type="submit" class="btn-success btn-sm btn-flat">Сохранить</button>
-                    </td>
-                    </form>
                 }
                 else
                 {
@@ -73,11 +72,11 @@
                     <td>
                         <form method="post" asp-page-handler="Edit" style="display:inline;">
                             <input type="hidden" name="passId" value="@pass.PassId" />
-                            <button type="submit" class="btn-outline-dark btn-sm btn-flat">Изменить</button>
+                            <button type="submit" class="btn btn-sm btn-warning">Изменить</button>
                         </form>
                         <form method="post" asp-page-handler="Delete" style="display:inline;">
                             <input type="hidden" name="passId" value="@pass.PassId" />
-                            <button type="submit" class="btn-outline-danger btn-sm btn-flat" onclick="return confirm('Удалить запись?')">Удалить</button>
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Удалить запись?')">Удалить</button>
                         </form>
                     </td>
                 }
@@ -85,3 +84,7 @@
         }
     </tbody>
 </table>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
