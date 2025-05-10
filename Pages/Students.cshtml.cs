@@ -1,10 +1,12 @@
+using checkpoint.Data;
+using checkpoint.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using checkpoint.Models;
-using checkpoint.Data;
 
 namespace checkpoint.Pages
 {
+    [Authorize]
     public class StudentsModel : PageModel
     {
         private readonly ApplicationDbContext _context;
