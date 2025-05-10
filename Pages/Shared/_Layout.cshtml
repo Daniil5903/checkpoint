@@ -34,19 +34,19 @@
                     </ul>
                 </div>
             </div>
-        </nav>
-        <!-- Пример меню -->
-        <nav>
-            <ul>
-                <li><a href="/">Домой</a></li>
-                <li><a href="/Account/Login">Войти</a></li>
-                <li><a href="/Account/Register">Зарегистрироваться</a></li>
-                <!-- Если пользователь залогинен, покажем ссылку на Logout -->
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <li><a href="/Account/Logout">Выйти</a></li>
-                }
-            </ul>
+            <!-- Пример меню -->
+            <nav>
+                <ul>
+                    <li><a href="/">Домой</a></li>
+                    <li><a href="/Account/Login">Войти</a></li>
+                    <li><a href="/Account/Register">Зарегистрироваться</a></li>
+                    <!-- Если пользователь залогинен, покажем ссылку на Logout -->
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li><a href="/Account/Logout">Выйти</a></li>
+                    }
+                </ul>
+            </nav>
         </nav>
     </header>
     <div class="container">
