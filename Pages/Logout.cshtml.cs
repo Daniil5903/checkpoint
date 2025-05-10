@@ -14,10 +14,10 @@ namespace checkpoint.Pages.Account
             _signInManager = signInManager;
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnGet()
         {
-            await _signInManager.SignOutAsync();
-            return RedirectToPage("/Index"); // перенаправление после выхода
+            await _signInManager.SignOutAsync();  // ¬ыход пользовател€
+            return RedirectToPage("/Index"); // ѕеренаправление после выхода
         }
     }
 }
