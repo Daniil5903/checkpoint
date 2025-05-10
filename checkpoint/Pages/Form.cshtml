@@ -93,20 +93,4 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"
-            integrity="sha512-iJq6EtHvFBV2ZqojniqjF6HTmAL5DFzIVZMdNBG0oIfkRJPVdlcnOCya0qZysYZK06OtcBdIZRpJvlGgW3zy1A=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    <script>
-        const connection = new signalR.HubConnectionBuilder()
-            .withUrl("/passHub")
-            .build();
-
-        connection.on("ReloadTable", () => {
-            location.reload();
-        });
-
-        connection.start().catch(err => console.error(err.toString()));
-    </script>
 }

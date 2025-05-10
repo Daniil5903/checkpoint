@@ -1,9 +1,7 @@
-п»їusing Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using checkpoint.Data;
-using checkpoint.Hubs;
 using checkpoint.Models;
 using System.ComponentModel.DataAnnotations;
 
@@ -12,12 +10,10 @@ namespace checkpoint.Pages
     public class FormModel : PageModel
     {
         private readonly ApplicationDbContext _context;
-        private readonly IHubContext<PassHub> _hubContext; // рџ‘€ SignalR
 
-        public FormModel(ApplicationDbContext context, IHubContext<PassHub> hubContext)
+        public FormModel(ApplicationDbContext context)
         {
             _context = context;
-            _hubContext = hubContext;
         }
 
         public List<PassViewModel> Passes { get; set; } = new();
@@ -25,23 +21,26 @@ namespace checkpoint.Pages
         [BindProperty]
         public int? EditingPassId { get; set; }
 
-        [BindProperty, Required(ErrorMessage = "Р’РІРµРґРёС‚Рµ С„Р°РјРёР»РёСЋ")]
-        [MinLength(2), MaxLength(50)]
-        [RegularExpression(@"^[Рђ-РЇР°-СЏРЃС‘A-Za-z\s\-]+$")]
+        [BindProperty, Required(ErrorMessage = "Введите фамилию")]
+        [MinLength(2, ErrorMessage = "Фамилия должна содержать минимум 2 символа")]
+        [MaxLength(50, ErrorMessage = "Фамилия не должна превышать 50 символов")]
+        [RegularExpression(@"^[А-Яа-яЁёA-Za-z\s\-]+$", ErrorMessage = "Допустимы только буквы, пробел и дефис")]
         public string EditedSurname { get; set; } = "";
 
-        [BindProperty, Required(ErrorMessage = "Р’РІРµРґРёС‚Рµ РёРјСЏ")]
-        [MinLength(2), MaxLength(50)]
-        [RegularExpression(@"^[Рђ-РЇР°-СЏРЃС‘A-Za-z\s\-]+$")]
+        [BindProperty, Required(ErrorMessage = "Введите имя")]
+        [MinLength(2, ErrorMessage = "Имя должно содержать минимум 2 символа")]
+        [MaxLength(50, ErrorMessage = "Имя не должно превышать 50 символов")]
+        [RegularExpression(@"^[А-Яа-яЁёA-Za-z\s\-]+$", ErrorMessage = "Допустимы только буквы, пробел и дефис")]
         public string EditedName { get; set; } = "";
 
         [BindProperty]
-        [MaxLength(50)]
-        [RegularExpression(@"^[Рђ-РЇР°-СЏРЃС‘A-Za-z\s\-]*$")]
+        [MaxLength(50, ErrorMessage = "Отчество не должно превышать 50 символов")]
+        [RegularExpression(@"^[А-Яа-яЁёA-Za-z\s\-]*$", ErrorMessage = "Допустимы только буквы, пробел и дефис")]
         public string? EditedPatronymic { get; set; }
 
-        [BindProperty, Required(ErrorMessage = "Р’РІРµРґРёС‚Рµ С†РµР»СЊ РїРѕСЃРµС‰РµРЅРёСЏ")]
-        [MinLength(3), MaxLength(100)]
+        [BindProperty, Required(ErrorMessage = "Введите цель посещения")]
+        [MinLength(3, ErrorMessage = "Цель должна содержать минимум 3 символа")]
+        [MaxLength(100, ErrorMessage = "Цель не должна превышать 100 символов")]
         public string? EditedPurpose { get; set; }
 
         [BindProperty]
@@ -69,16 +68,14 @@ namespace checkpoint.Pages
             {
                 _context.Passes.Remove(pass);
                 await _context.SaveChangesAsync();
-
-                await _hubContext.Clients.All.SendAsync("ReloadTable"); // 
             }
-
             return RedirectToPage();
         }
 
         public async Task<IActionResult> OnPostEditAsync(int passId)
         {
             EditingPassId = passId;
+
             var pass = await _context.Passes.FindAsync(passId);
             if (pass != null)
             {
@@ -93,6 +90,7 @@ namespace checkpoint.Pages
                             EditedPatronymic = student.Patronymic;
                         }
                         break;
+
                     case "Employee":
                         var emp = await _context.Employees.FindAsync(pass.OwnerId);
                         if (emp != null)
@@ -103,6 +101,7 @@ namespace checkpoint.Pages
                             EditedPosition = emp.Position;
                         }
                         break;
+
                     case "Visitor":
                         var vis = await _context.Visitors.FindAsync(pass.OwnerId);
                         if (vis != null)
@@ -168,20 +167,20 @@ namespace checkpoint.Pages
             }
 
             await _context.SaveChangesAsync();
-
-            await _hubContext.Clients.All.SendAsync("ReloadTable"); // 
-
             return RedirectToPage();
         }
 
         private async Task LoadPassesAsync()
         {
-            var allPasses = await _context.Passes.OrderByDescending(p => p.IssueDate).ToListAsync();
-            Passes = new();
+            var allPasses = await _context.Passes
+                .OrderByDescending(p => p.IssueDate)
+                .ToListAsync();
+
+            Passes = new List<PassViewModel>();
 
             foreach (var pass in allPasses)
             {
-                string fullName = "РќРµРёР·РІРµСЃС‚РЅРѕ";
+                string fullName = "Неизвестно";
                 string? position = null;
 
                 switch (pass.OwnerType)
@@ -191,6 +190,7 @@ namespace checkpoint.Pages
                         if (student != null)
                             fullName = $"{student.Surname} {student.Name} {student.Patronymic}";
                         break;
+
                     case "Employee":
                         var emp = await _context.Employees.FindAsync(pass.OwnerId);
                         if (emp != null)
@@ -199,6 +199,7 @@ namespace checkpoint.Pages
                             position = emp.Position;
                         }
                         break;
+
                     case "Visitor":
                         var vis = await _context.Visitors.FindAsync(pass.OwnerId);
                         if (vis != null)
