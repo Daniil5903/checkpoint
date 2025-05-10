@@ -1,0 +1,112 @@
+@page
+@model checkpoint.Pages.FormModel
+@{
+    ViewData["Title"] = "Журнал проходящих через КПП";
+}
+
+<h2 class="mb-4">Журнал проходящих через КПП</h2>
+
+@if (!ViewData.ModelState.IsValid && Model.EditingPassId != null)
+{
+    <div class="alert alert-danger">
+        Пожалуйста, исправьте ошибки в форме перед сохранением.
+    </div>
+}
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>ФИО</th>
+            <th>Тип</th>
+            <th>Цель</th>
+            <th>Дата и время входа</th>
+            <th>Должность</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var pass in Model.Passes)
+        {
+            <tr>
+                @if (Model.EditingPassId == pass.PassId)
+                {
+                    <form method="post" asp-page-handler="Save">
+                        <input type="hidden" name="passId" value="@pass.PassId" />
+                    <td>
+                        <input asp-for="EditedSurname" class="form-control @(ViewData.ModelState["EditedSurname"]?.Errors.Count > 0 ? "is-invalid" : "")" placeholder="Фамилия" />
+                        <span asp-validation-for="EditedSurname" class="text-danger small"></span>
+
+                        <input asp-for="EditedName" class="form-control mt-1 @(ViewData.ModelState["EditedName"]?.Errors.Count > 0 ? "is-invalid" : "")" placeholder="Имя" />
+                        <span asp-validation-for="EditedName" class="text-danger small"></span>
+
+                        <input asp-for="EditedPatronymic" class="form-control mt-1 @(ViewData.ModelState["EditedPatronymic"]?.Errors.Count > 0 ? "is-invalid" : "")" placeholder="Отчество" />
+                        <span asp-validation-for="EditedPatronymic" class="text-danger small"></span>
+                    </td>
+                    <td>@pass.OwnerType</td>
+                    <td>
+                        <input asp-for="EditedPurpose" class="form-control @(ViewData.ModelState["EditedPurpose"]?.Errors.Count > 0 ? "is-invalid" : "")" placeholder="Цель посещения" />
+                        <span asp-validation-for="EditedPurpose" class="text-danger small"></span>
+                    </td>
+                    <td>@pass.IssueDate.ToString("dd.MM.yyyy HH:mm:ss")</td>
+                    <td>
+                        @if (pass.OwnerType == "Employee")
+                        {
+                            <select asp-for="EditedPosition" class="form-select">
+                                <option value="Преподаватель">Преподаватель</option>
+                                <option value="Директор">Директор</option>
+                                <option value="Уборщик">Уборщик</option>
+                                <option value="Охранник">Охранник</option>
+                            </select>
+                        }
+                        else
+                        {
+                            @(pass.Position ?? "-")
+                        }
+                    </td>
+                    <td>
+                        <button type="submit" class="btn-outline-success btn-outline-success btn-sm ">Сохранить</button>
+                    </td>
+                    </form>
+                }
+                else
+                {
+                    <td>@pass.FullName</td>
+                    <td>@pass.OwnerType</td>
+                    <td>@pass.Purpose</td>
+                    <td>@pass.IssueDate.ToString("dd.MM.yyyy HH:mm:ss")</td>
+                    <td>@(pass.Position ?? "-")</td>
+                    <td>
+                        <form method="post" asp-page-handler="Edit" style="display:inline;">
+                            <input type="hidden" name="passId" value="@pass.PassId" />
+                            <button type="submit" class="btn-outline-dark btn-sm btn-group-lg">Изменить</button>
+                        </form>
+                        <form method="post" asp-page-handler="Delete" style="display:inline;">
+                            <input type="hidden" name="passId" value="@pass.PassId" />
+                            <button type="submit" class="btn-outline-danger btn-sm btn-Float" onclick="return confirm('Удалить запись?')">Удалить</button>
+                        </form>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"
+            integrity="sha512-iJq6EtHvFBV2ZqojniqjF6HTmAL5DFzIVZMdNBG0oIfkRJPVdlcnOCya0qZysYZK06OtcBdIZRpJvlGgW3zy1A=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/passHub")
+            .build();
+
+        connection.on("ReloadTable", () => {
+            location.reload();
+        });
+
+        connection.start().catch(err => console.error(err.toString()));
+    </script>
+}

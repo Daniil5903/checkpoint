@@ -1,0 +1,41 @@
+﻿@page
+@model checkpoint.Pages.EmployeesModel
+@{
+    ViewData["Title"] = "Добавление сотрудника";
+}
+
+<h2 class="mb-4">Добавить сотрудника</h2>
+
+<form method="post" class="card p-4 shadow-sm">
+    <div class="form-group mb-2">
+        <label>Имя:</label>
+        <input asp-for="Employee.Name" class="form-control" />
+    </div>
+    <div class="form-group mb-2">
+        <label>Фамилия:</label>
+        <input asp-for="Employee.Surname" class="form-control" />
+    </div>
+    <div class="form-group mb-2">
+        <label>Отчество:</label>
+        <input asp-for="Employee.Patronymic" class="form-control" />
+    </div>
+    <div class="form-group mb-2">
+        <label>Должность:</label>
+        <select asp-for="Employee.Position" class="form-control">
+            <option value="">-- Выберите должность --</option>
+            <option>Преподаватель</option>
+            <option>Уборщик</option>
+            <option>Охранник</option>
+            <option>Директор</option>
+        </select>
+    </div>
+    <div class="form-group mb-3">
+        <label>Цель прохода:</label>
+        <input asp-for="Purpose" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
