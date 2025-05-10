@@ -1,0 +1,26 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity
+@model checkpoint.Pages.Account.RegisterModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+<h2>@ViewData["Title"]</h2>
+<form method="post">
+    <div class="form-group">
+        <label for="Input_Email">Email</label>
+        <input id="Input_Email" type="email" name="Input.Email" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="Input_Password">Пароль</label>
+        <input id="Input_Password" type="password" name="Input.Password" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="Input_ConfirmPassword">Подтвердите пароль</label>
+        <input id="Input_ConfirmPassword" type="password" name="Input.ConfirmPassword" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+</form>
+<div>
+    <a href="/Account/Login">У вас уже есть учетная запись? Войдите здесь!</a>
+</div>
