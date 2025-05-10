@@ -13,26 +13,32 @@ namespace checkpoint.Pages.Account
         {
             _signInManager = signInManager;
         }
+
         [BindProperty]
-        public InputModel Input { get; set; }
+        public InputModel Input { get; set; } = null!;
+
         public class InputModel
         {
             public string Email { get; set; } = null!;
             public string Password { get; set; } = null!;
         }
+
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
+
             var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, false, false);
             if (result.Succeeded)
             {
-                return RedirectToPage("/Index"); // перенаправление после успешного входа
+                return RedirectToPage("/Index");
             }
+
             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             return Page();
         }
     }
+
 }
