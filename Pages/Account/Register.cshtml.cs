@@ -9,45 +9,38 @@ namespace checkpoint.Pages.Account
     {
         private readonly UserManager<AuthUser> _userManager;
         private readonly SignInManager<AuthUser> _signInManager;
-
-        // Добавляем SignInManager в конструктор
         public RegisterModel(UserManager<AuthUser> userManager, SignInManager<AuthUser> signInManager)
         {
             _userManager = userManager;
-            _signInManager = signInManager;  // Инициализация SignInManager
+            _signInManager = signInManager;
         }
-
         [BindProperty]
-        public InputModel Input { get; set; } = new InputModel();
-
+        public InputModel Input { get; set; } = new();
         public class InputModel
         {
-            public string Email { get; set; } = null!;
-            public string Password { get; set; } = null!;
-            public string ConfirmPassword { get; set; } = null!;
+            public string Email { get; set; } = string.Empty;
+            public string Password { get; set; } = string.Empty;
+            public string ConfirmPassword { get; set; } = string.Empty;
         }
-
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
+                return Page();
+            if (Input.Password != Input.ConfirmPassword)
             {
+                ModelState.AddModelError(string.Empty, "Пароли не совпадают.");
                 return Page();
             }
-
             var user = new AuthUser { UserName = Input.Email, Email = Input.Email };
             var result = await _userManager.CreateAsync(user, Input.Password);
+
             if (result.Succeeded)
             {
-                // Используем _signInManager для аутентификации пользователя
                 await _signInManager.SignInAsync(user, isPersistent: false);
-                return RedirectToPage("/Index"); // перенаправление после успешной регистрации
+                return RedirectToPage("/Index");
             }
-
             foreach (var error in result.Errors)
-            {
                 ModelState.AddModelError(string.Empty, error.Description);
-            }
-
             return Page();
         }
     }
