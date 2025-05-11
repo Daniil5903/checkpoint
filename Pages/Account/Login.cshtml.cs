@@ -15,6 +15,7 @@ namespace checkpoint.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; } = new();
         public string? ErrorMessage { get; set; }
+
         public class InputModel
         {
             public string Email { get; set; } = string.Empty;
