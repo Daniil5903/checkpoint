@@ -8,17 +8,20 @@ namespace checkpoint.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly SignInManager<AuthUser> _signInManager;
-
         public LoginModel(SignInManager<AuthUser> signInManager)
         {
             _signInManager = signInManager;
         }
         [BindProperty]
-        public InputModel Input { get; set; }
+        public InputModel Input { get; set; } = new();
+        public string? ErrorMessage { get; set; }
         public class InputModel
         {
-            public string Email { get; set; } = null!;
-            public string Password { get; set; } = null!;
+            public string Email { get; set; } = string.Empty;
+            public string Password { get; set; } = string.Empty;
+        }
+        public void OnGet()
+        {
         }
         public async Task<IActionResult> OnPostAsync()
         {
@@ -26,12 +29,12 @@ namespace checkpoint.Pages.Account
             {
                 return Page();
             }
-            var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, false, false);
+            var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, isPersistent: false, lockoutOnFailure: false);
             if (result.Succeeded)
             {
-                return RedirectToPage("/Index"); // перенаправление после успешного входа
+                return RedirectToPage("/Index"); // или любую нужную страницу
             }
-            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            ErrorMessage = "Ошибка входа. Проверьте email и пароль.";
             return Page();
         }
     }
