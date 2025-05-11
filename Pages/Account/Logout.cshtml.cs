@@ -1,7 +1,7 @@
-using checkpoint.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using checkpoint.Models;
 
 namespace checkpoint.Pages.Account
 {
@@ -14,10 +14,10 @@ namespace checkpoint.Pages.Account
             _signInManager = signInManager;
         }
 
-        public async Task<IActionResult> OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            await _signInManager.SignOutAsync();  // ¬ыход пользовател€
-            return RedirectToPage("/Index"); // ѕеренаправление после выхода
+            await _signInManager.SignOutAsync();
+            return RedirectToPage("/Index"); // или другую нужную страницу
         }
     }
 }
