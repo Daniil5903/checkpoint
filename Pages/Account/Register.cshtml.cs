@@ -36,17 +36,21 @@ namespace checkpoint.Pages.Account
                 return Page();
             var user = new AuthUser { UserName = Input.Email, Email = Input.Email };
             var result = await _userManager.CreateAsync(user, Input.Password);
-
             if (result.Succeeded)
             {
-                // Проверка email перед добавлением роли
-                if (Input.Email == "ssuueee1@gmail.com")
+                // Если пользователь с таким email уже существует, получаем его.
+                var existingUser = await _userManager.FindByEmailAsync(Input.Email);
+                if (existingUser != null)
                 {
-                    await _userManager.AddToRoleAsync(user, "Admin");
-                }
-                else
-                {
-                    await _userManager.AddToRoleAsync(user, "User");
+                    // Если это админ, то назначаем роль админа, иначе роль User
+                    if (Input.Email == "ssuueee1@gmail.com")
+                    {
+                        await _userManager.AddToRoleAsync(existingUser, "Admin");
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(existingUser, "User");
+                    }
                 }
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return RedirectToPage("/Index");
@@ -55,5 +59,6 @@ namespace checkpoint.Pages.Account
                 ModelState.AddModelError(string.Empty, error.Description);
             return Page();
         }
+
     }
 }
