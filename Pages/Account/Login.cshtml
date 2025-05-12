@@ -4,7 +4,6 @@
     ViewData["Title"] = "Login";
 }
 <h2>Вход</h2>
-
 <form method="post">
     <div>
         <label asp-for="Input.Email"></label>
@@ -23,7 +22,6 @@
         <p class="text-danger">@Model.ErrorMessage</p>
     }
 </form>
-
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
