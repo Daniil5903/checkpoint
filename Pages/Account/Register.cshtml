@@ -22,6 +22,15 @@
     </div>
     <button type="submit">Зарегистрироваться</button>
 </form>
+@if (!ViewData.ModelState.IsValid)
+{
+    <ul style="color:red">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <li>@error.ErrorMessage</li>
+        }
+    </ul>
+}
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
