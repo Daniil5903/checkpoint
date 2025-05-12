@@ -12,7 +12,7 @@ namespace checkpoint.Pages.Account
         {
             _signInManager = signInManager;
         }
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnPostAsync()
         {
             await _signInManager.SignOutAsync();
             return RedirectToPage("/Index");
