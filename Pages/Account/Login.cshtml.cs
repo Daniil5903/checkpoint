@@ -36,17 +36,22 @@ namespace checkpoint.Pages.Account
             if (result.Succeeded)
             {
                 var user = await _userManager.FindByEmailAsync(Input.Email);
-                // Проверка, если пользователь не найден
                 if (user == null)
                 {
                     ErrorMessage = "Пользователь не найден.";
                     return Page();
                 }
                 var roles = await _userManager.GetRolesAsync(user);
+                if (roles == null || roles.Count == 0)
+                {
+                    // Если у пользователя нет ролей, можно назначить роль по умолчанию
+                    await _userManager.AddToRoleAsync(user, "User"); // Присваиваем роль по умолчанию, если нет роли
+                    roles = new List<string> { "User" }; // Устанавливаем роль
+                }
                 // Проверка, если пользователь администратор
                 if (roles.Contains("Admin"))
                 {
-                    return RedirectToPage("/Form"); // Если админ - редирект на Проходящих через кпп
+                    return RedirectToPage("/Form"); // Если админ - редирект на панель администратора
                 }
                 else
                 {
