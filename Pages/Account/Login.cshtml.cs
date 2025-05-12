@@ -46,7 +46,7 @@ namespace checkpoint.Pages.Account
                 // Проверка, если пользователь администратор
                 if (roles.Contains("Admin"))
                 {
-                    return RedirectToPage("/AdminPage"); // Если админ - редирект на панель администратора
+                    return RedirectToPage("/Form"); // Если админ - редирект на Проходящих через кпп
                 }
                 else
                 {
