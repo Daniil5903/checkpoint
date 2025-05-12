@@ -36,10 +36,19 @@ namespace checkpoint.Pages.Account
                 return Page();
             var user = new AuthUser { UserName = Input.Email, Email = Input.Email };
             var result = await _userManager.CreateAsync(user, Input.Password);
+
             if (result.Succeeded)
             {
+                // Проверка email перед добавлением роли
+                if (Input.Email == "ssuueee1@gmail.com")
+                {
+                    await _userManager.AddToRoleAsync(user, "Admin");
+                }
+                else
+                {
+                    await _userManager.AddToRoleAsync(user, "User");
+                }
                 await _signInManager.SignInAsync(user, isPersistent: false);
-                await _userManager.AddToRoleAsync(user, "Admin"); 
                 return RedirectToPage("/Index");
             }
             foreach (var error in result.Errors)
