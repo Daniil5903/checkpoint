@@ -2,6 +2,7 @@ using checkpoint.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
 
 namespace checkpoint.Pages.Account
 {
@@ -15,27 +16,26 @@ namespace checkpoint.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; } = new();
         public string? ErrorMessage { get; set; }
-
         public class InputModel
         {
+            [Required]
+            [EmailAddress]
             public string Email { get; set; } = string.Empty;
+            [Required]
+            [DataType(DataType.Password)]
             public string Password { get; set; } = string.Empty;
-        }
-        public void OnGet()
-        {
         }
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
-            {
                 return Page();
-            }
-            var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, isPersistent: false, lockoutOnFailure: false);
+
+            var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, false, false);
             if (result.Succeeded)
             {
-                return RedirectToPage("/Index"); // или любую нужную страницу
+                return RedirectToPage("/Index");
             }
-            ErrorMessage = "Ошибка входа. Проверьте email и пароль.";
+            ErrorMessage = "Неправильный email или пароль.";
             return Page();
         }
     }
