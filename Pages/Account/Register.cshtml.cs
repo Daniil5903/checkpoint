@@ -39,6 +39,7 @@ namespace checkpoint.Pages.Account
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, isPersistent: false);
+                await _userManager.AddToRoleAsync(user, "Admin"); 
                 return RedirectToPage("/Index");
             }
             foreach (var error in result.Errors)
