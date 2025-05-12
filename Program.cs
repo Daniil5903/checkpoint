@@ -7,14 +7,29 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Login";
+    options.LogoutPath = "/Account/Logout";
+    options.AccessDeniedPath = "/Account/AccessDenied"; //потом мб
+});
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("checkpointDb")));
 // Добавляем Identity
-builder.Services.AddDefaultIdentity<AuthUser>(options =>
+builder.Services.AddIdentity<AuthUser, IdentityRole>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
+
+    // временно упрощаем требования к паролю
+    options.Password.RequireDigit = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequiredLength = 4;
 })
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+.AddEntityFrameworkStores<ApplicationDbContext>()
+.AddDefaultTokenProviders();
+
 var app = builder.Build();
 // Миграции при старте
 using (var scope = app.Services.CreateScope())
