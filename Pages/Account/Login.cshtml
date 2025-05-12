@@ -3,21 +3,27 @@
 @{
     ViewData["Title"] = "Login";
 }
-<h2>Login</h2>
+<h2>Вход</h2>
+
 <form method="post">
     <div>
         <label asp-for="Input.Email"></label>
-        <input asp-for="Input.Email" />
+        <input asp-for="Input.Email" class="form-control" />
+        <span asp-validation-for="Input.Email" class="text-danger"></span>
     </div>
     <div>
         <label asp-for="Input.Password"></label>
-        <input asp-for="Input.Password" type="password" />
+        <input asp-for="Input.Password" type="password" class="form-control" />
+        <span asp-validation-for="Input.Password" class="text-danger"></span>
     </div>
-    <div>
-        <button type="submit">Login</button>
-    </div>
+    <button type="submit">Войти</button>
+
     @if (Model.ErrorMessage != null)
     {
-        <p style="color:red"lang="ru">@Model.ErrorMessage</p>
+        <p class="text-danger">@Model.ErrorMessage</p>
     }
 </form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
