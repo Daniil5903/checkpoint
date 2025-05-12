@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace checkpoint.Pages
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class EmployeesModel : PageModel
     {
         private readonly ApplicationDbContext _context;

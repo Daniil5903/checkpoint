@@ -11,7 +11,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Account/Login";
     options.LogoutPath = "/Account/Logout";
-    options.AccessDeniedPath = "/Account/AccessDenied"; //потом мб
+    options.AccessDeniedPath = "/Account/AccessDenied"; // позже добавим
 });
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("checkpointDb")));
@@ -31,19 +31,15 @@ builder.Services.AddIdentity<AuthUser, IdentityRole>(options =>
 .AddDefaultTokenProviders();
 
 var app = builder.Build();
+
 // Миграции при старте
-using (var scope = app.Services.CreateScope())
-{
-    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    context.Database.Migrate();
-}
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<ApplicationDbContext>();
-    context.Database.Migrate();
+    await context.Database.MigrateAsync(); // Асинхронно выполняем миграции
 
-    // Добавляем роли
+    // Добавляем роли, если они не существуют
     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
     string[] roles = { "Admin", "User" };
     foreach (var role in roles)
@@ -51,7 +47,20 @@ using (var scope = app.Services.CreateScope())
         if (!await roleManager.RoleExistsAsync(role))
             await roleManager.CreateAsync(new IdentityRole(role));
     }
+
+    // Добавляем админа в роль
+    var userManager = services.GetRequiredService<UserManager<AuthUser>>();
+    var adminEmail = "ssuueee1@gmail.com"; // email зарегистрированного админа
+    var adminUser = await userManager.FindByEmailAsync(adminEmail);
+
+    // Если пользователь существует и нет роли Admin, то добавляем
+    if (adminUser != null && !await userManager.IsInRoleAsync(adminUser, "Admin"))
+    {
+        await userManager.AddToRoleAsync(adminUser, "Admin");
+    }
+
 }
+
 
 if (!app.Environment.IsDevelopment())
 {
@@ -59,7 +68,7 @@ if (!app.Environment.IsDevelopment())
 }
 app.UseStaticFiles();
 app.UseRouting();
-// включаем аутентификацию и авторизацию
+// Включаем аутентификацию и авторизацию
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();
