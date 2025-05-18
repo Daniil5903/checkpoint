@@ -5,9 +5,41 @@
 }
 
 <h2>Ваш профиль</h2>
-
 <table class="table table-bordered w-50 mt-3">
     <tr><th>Email</th><td>@Model.Email</td></tr>
     <tr><th>Имя</th><td>@Model.UserName</td></tr>
     <tr><th>Роли</th><td>@string.Join(", ", Model.Roles)</td></tr>
 </table>
+<form method="post" asp-page-handler="ShowForm">
+    <button type="submit" class="btn btn-secondary">Сменить пароль</button>
+</form>
+@if (Model.ShowPasswordForm)
+{
+    <hr />
+    <h4>Смена пароля</h4>
+    <form method="post" asp-page-handler="ChangePassword">
+        <div class="mb-3">
+            <label asp-for="ChangePasswordModel.OldPassword" class="form-label"></label>
+            <input asp-for="ChangePasswordModel.OldPassword" class="form-control" />
+            <span asp-validation-for="ChangePasswordModel.OldPassword" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="ChangePasswordModel.NewPassword" class="form-label"></label>
+            <input asp-for="ChangePasswordModel.NewPassword" class="form-control" />
+            <span asp-validation-for="ChangePasswordModel.NewPassword" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="ChangePasswordModel.ConfirmPassword" class="form-label"></label>
+            <input asp-for="ChangePasswordModel.ConfirmPassword" class="form-control" />
+            <span asp-validation-for="ChangePasswordModel.ConfirmPassword" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Сменить</button>
+    </form>
+}
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success mt-3">@TempData["Success"]</div>
+}
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

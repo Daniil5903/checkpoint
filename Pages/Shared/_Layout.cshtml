@@ -43,17 +43,23 @@
                     <ul class="navbar-nav ms-auto">
                         @if (User.Identity?.IsAuthenticated ?? false)
                         {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/Account/Profile">Профиль</a>
+                            </li>
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/Account/Profiles">Все пользователи</a>
+                                </li>
+                            }
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-dark" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     @User.Identity.Name
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                    @if (User.IsInRole("Admin"))
-                                    {
-                                        <li><a class="dropdown-item" href="/Employees">Панель администратора</a></li>
-                                    }
+                                    @* Можно добавить ссылку на смену пароля и т.д. *@
                                     <li><a class="dropdown-item" href="/Account/Logout">Выйти</a></li>
-                                    <li><a class="dropdown-item" href="/Account/Login">Сменить пользователя</a></li>
                                 </ul>
                             </li>
                         }
@@ -77,7 +83,6 @@
             @RenderBody()
         </main>
     </div>
-
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2025 - checkpoint - <a asp-page="/Privacy">Privacy</a>
