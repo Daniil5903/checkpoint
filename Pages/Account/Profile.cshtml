@@ -19,17 +19,17 @@
     <h4>Смена пароля</h4>
     <form method="post" asp-page-handler="ChangePassword">
         <div class="mb-3">
-            <label asp-for="ChangePasswordModel.OldPassword" class="form-label"></label>
+            <label>Старый пароль</label>
             <input asp-for="ChangePasswordModel.OldPassword" class="form-control" />
             <span asp-validation-for="ChangePasswordModel.OldPassword" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label asp-for="ChangePasswordModel.NewPassword" class="form-label"></label>
+            <label>Новый пароль</label>
             <input asp-for="ChangePasswordModel.NewPassword" class="form-control" />
             <span asp-validation-for="ChangePasswordModel.NewPassword" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label asp-for="ChangePasswordModel.ConfirmPassword" class="form-label"></label>
+            <label>Подтвердите новый пароль</label>
             <input asp-for="ChangePasswordModel.ConfirmPassword" class="form-control" />
             <span asp-validation-for="ChangePasswordModel.ConfirmPassword" class="text-danger"></span>
         </div>
