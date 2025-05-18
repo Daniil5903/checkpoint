@@ -2,6 +2,7 @@
 @model checkpoint.Pages.FormModel
 @{
     ViewData["Title"] = "Журнал проходящих через КПП";
+    var isAdmin = User.IsInRole("Admin");
 }
 
 <h2 class="mb-4">Журнал проходящих через КПП</h2>
@@ -21,7 +22,10 @@
             <th>Цель</th>
             <th>Дата и время входа</th>
             <th>Должность</th>
-            <th>Действия</th>
+            @if (isAdmin)
+            {
+                <th>Действия</th>
+            }
         </tr>
     </thead>
     <tbody>
@@ -63,9 +67,12 @@
                             @(pass.Position ?? "-")
                         }
                     </td>
-                    <td>
-                        <button type="submit" class="btn-outline-success btn-outline-success btn-sm ">Сохранить</button>
-                    </td>
+                    @if (isAdmin)
+                    {
+                        <td>
+                            <button type="submit" class="btn btn-outline-success btn-sm">Сохранить</button>
+                        </td>
+                    }
                     </form>
                 }
                 else
@@ -75,16 +82,19 @@
                     <td>@pass.Purpose</td>
                     <td>@pass.IssueDate.ToString("dd.MM.yyyy HH:mm:ss")</td>
                     <td>@(pass.Position ?? "-")</td>
-                    <td>
-                        <form method="post" asp-page-handler="Edit" style="display:inline;">
-                            <input type="hidden" name="passId" value="@pass.PassId" />
-                            <button type="submit" class="btn-outline-dark btn-sm btn-group-lg">Изменить</button>
-                        </form>
-                        <form method="post" asp-page-handler="Delete" style="display:inline;">
-                            <input type="hidden" name="passId" value="@pass.PassId" />
-                            <button type="submit" class="btn-outline-danger btn-sm btn-Float" onclick="return confirm('Удалить запись?')">Удалить</button>
-                        </form>
-                    </td>
+                    @if (isAdmin)
+                    {
+                        <td>
+                            <form method="post" asp-page-handler="Edit" style="display:inline;">
+                                <input type="hidden" name="passId" value="@pass.PassId" />
+                                <button type="submit" class="btn btn-outline-dark btn-sm">Изменить</button>
+                            </form>
+                            <form method="post" asp-page-handler="Delete" style="display:inline;">
+                                <input type="hidden" name="passId" value="@pass.PassId" />
+                                <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Удалить запись?')">Удалить</button>
+                            </form>
+                        </td>
+                    }
                 }
             </tr>
         }
@@ -93,7 +103,7 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"
             integrity="sha512-iJq6EtHvFBV2ZqojniqjF6HTmAL5DFzIVZMdNBG0oIfkRJPVdlcnOCya0qZysYZK06OtcBdIZRpJvlGgW3zy1A=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
