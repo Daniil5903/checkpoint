@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using checkpoint.Models
+@inject SignInManager<AuthUser> SignInManager
+@inject UserManager<AuthUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -35,15 +40,26 @@
                     </ul>
 
                     <ul class="navbar-nav ms-auto">
-                        @if (User.Identity?.IsAuthenticated ?? false)
+                        @if (SignInManager.IsSignedIn(User))
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" href="/Account/Logout">Выйти</a>
+                            var user = await UserManager.GetUserAsync(User);
+                            var roles = await UserManager.GetRolesAsync(user);
+                            var email = user?.Email ?? "";
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    @email
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="/Account/Logout">Выйти</a></li>
+                                    <li><a class="dropdown-item" href="/Account/Login">Сменить пользователя</a></li>
+                                    @if (roles.Contains("Admin"))
+                                    {
+                                        <li><hr class="dropdown-divider" /></li>
+                                        <li><a class="dropdown-item" href="/Admin">Панель администратора</a></li>
+                                    }
+                                </ul>
                             </li>
-                            @if (User.IsInRole("Admin"))
-                            {
-                                <li><a href="/Employees">Панель администратора</a></li>
-                            }
                         }
                         else
                         {
