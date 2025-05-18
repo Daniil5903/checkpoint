@@ -1,0 +1,13 @@
+﻿@page
+@model ProfileModel
+@{
+    ViewData["Title"] = "Профиль";
+}
+
+<h2>Ваш профиль</h2>
+
+<table class="table table-bordered w-50 mt-3">
+    <tr><th>Email</th><td>@Model.Email</td></tr>
+    <tr><th>Имя</th><td>@Model.UserName</td></tr>
+    <tr><th>Роли</th><td>@string.Join(", ", Model.Roles)</td></tr>
+</table>
