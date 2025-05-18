@@ -1,9 +1,4 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using checkpoint.Models
-@inject SignInManager<AuthUser> SignInManager
-@inject UserManager<AuthUser> UserManager
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -25,39 +20,41 @@
 
                 <div class="collapse navbar-collapse" id="navbarContent">
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/Students">Студенты</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/Visitors">Посетители</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/Employees">Работники</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/Form">Проходящие через КПП</a>
-                        </li>
+                        @if (User.Identity?.IsAuthenticated ?? false)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/Form">Проходящие через КПП</a>
+                            </li>
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/Students">Студенты</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/Visitors">Посетители</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/Employees">Работники</a>
+                                </li>
+                            }
+                        }
                     </ul>
 
                     <ul class="navbar-nav ms-auto">
-                        @if (SignInManager.IsSignedIn(User))
+                        @if (User.Identity?.IsAuthenticated ?? false)
                         {
-                            var user = await UserManager.GetUserAsync(User);
-                            var roles = await UserManager.GetRolesAsync(user);
-                            var email = user?.Email ?? "";
-
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    @email
+                                <a class="nav-link dropdown-toggle text-dark" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    @User.Identity.Name
                                 </a>
-                                <ul class="dropdown-menu dropdown-menu-end">
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <li><a class="dropdown-item" href="/Employees">Панель администратора</a></li>
+                                    }
                                     <li><a class="dropdown-item" href="/Account/Logout">Выйти</a></li>
                                     <li><a class="dropdown-item" href="/Account/Login">Сменить пользователя</a></li>
-                                    @if (roles.Contains("Admin"))
-                                    {
-                                        <li><hr class="dropdown-divider" /></li>
-                                        <li><a class="dropdown-item" href="/Admin">Панель администратора</a></li>
-                                    }
                                 </ul>
                             </li>
                         }
