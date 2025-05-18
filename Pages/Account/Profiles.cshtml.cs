@@ -1,3 +1,4 @@
+using checkpoint.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -5,9 +6,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 [Authorize(Roles = "Admin")]
 public class ProfilesModel : PageModel
 {
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<AuthUser> _userManager;
 
-    public ProfilesModel(UserManager<IdentityUser> userManager)
+    public ProfilesModel(UserManager<AuthUser> userManager)
     {
         _userManager = userManager;
     }
